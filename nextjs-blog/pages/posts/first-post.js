@@ -7,7 +7,7 @@ export default function FirstPost() {
     return (
         <>
         <Head>
-            <h1>First Post</h1>
+            <title>First Post</title>
         </Head>
         <h2>
             <Link href='/'>
