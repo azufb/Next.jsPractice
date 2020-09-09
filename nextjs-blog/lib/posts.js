@@ -34,3 +34,30 @@ export function getSortedPostsData() {
         }
     })
 }
+
+// postsディレクトリ内のファイル名のリストを返す
+export function getAllPostIds() {
+    const fileNames = fs.readdirSync(postsDirectory)
+
+    return fileNames.map(fileName => {
+        return {
+            params: {
+                id: fileName.replace(/\.md$/, '')
+            }
+        }
+    })
+}
+
+export function getPostData(id) {
+    const fullPath = path.join(postsDirectory, `${ id }.md`)
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+
+    // gray-matterを用いて、metadataセクションを解析
+    const matterResult = matter(fileContents)
+
+    // idと共にdataを組み合わせる
+    return {
+        id,
+        ...matterResult.data
+    }
+}
