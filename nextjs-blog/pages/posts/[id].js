@@ -9,6 +9,8 @@ export default function Post({ postData }) {
             { postData.id }
             <br />
             { postData.date }
+            <br />
+            <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
         </Layout>
     )
 }
@@ -22,7 +24,10 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
+    // awaitキーワードを追加する
+    const postData = await getPostData(params.id)
+
     // prams.idを用いて、ブログ投稿に必要なデータを取得
     const postData = getPostData(params.id)
     return {
